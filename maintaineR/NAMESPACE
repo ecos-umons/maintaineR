@@ -1,1 +1,4 @@
+import(igraph)
+importFrom(rCharts, rCharts)
+importFrom(d3Network, d3ForceNetwork)
 exportPattern("^[[:alpha:]]+")
