@@ -1,0 +1,12 @@
+Package: maintaineR
+Type: Package
+Title: maintaineR
+Version: 1.0
+Date: 2013-08-21
+Author: Maëlick Claes <himself@maelick.net>
+Maintainer: Maëlick Claes <himself@maelick.net>
+Description: maintaineR contains functions to analyse CRAN packages
+             depencies, conflicts and clones.
+Imports: igraph, rCharts, d3Network
+License: GPL-3
+Encoding: UTF-8
