@@ -1,8 +1,5 @@
 library(extractoR.utils)
 library(igraph)
-library(CloneR)
-library(rCharts)
-library(d3Network)
 library(timeline)
 library(maintaineR)
 
