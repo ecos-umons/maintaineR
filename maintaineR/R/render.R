@@ -1,10 +1,3 @@
-MakeTable <- function(df, class="table") {
-  tags$table(tags$tr(lapply(names(df), tags$th)),
-             tagList(by(df, 1:nrow(df),
-                        function(x) tags$tr(lapply(x, tags$td)))),
-             class=class)
-}
-
 RenderSankey <- function(graph) {
   E(graph)$value <- 1
   edgelist <- get.data.frame(graph)

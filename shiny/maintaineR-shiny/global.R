@@ -22,6 +22,13 @@ ParseParams <- function(session) {
   list(package=params$p, version=params$v, date=params$d)
 }
 
+MakeTable <- function(df, class="table") {
+  tags$table(tags$tr(lapply(names(df), tags$th)),
+             tagList(by(df, 1:nrow(df),
+                        function(x) tags$tr(lapply(x, tags$td)))),
+             class=class)
+}
+
 RenderTitle <- function(package, version, date) {
   if (is.null(package)) {
     "CRAN"
