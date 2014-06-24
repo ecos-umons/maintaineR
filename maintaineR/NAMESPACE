@@ -1,4 +1,11 @@
 import(igraph)
 importFrom(rCharts, rCharts)
 importFrom(d3Network, d3ForceNetwork)
-exportPattern("^[[:alpha:]]+")
+
+export(ReadCRANData)
+export(StateData)
+export(PackageHistory)
+export(DependencyGraph, Dependencies, GraphSubset)
+export(RenderSankey, RenderGraph)
+export(Clones)
+export(Conflicts)

@@ -1,19 +1,16 @@
-\name{extractoR.utils-package}
-\alias{extractoR.utils-package}
-\alias{extractoR.utils}
+\name{maintaineR-package}
+\alias{maintaineR-package}
+\alias{maintaineR}
 \docType{package}
 \encoding{UTF-8}
-\title{CRAN packages metadata extractor (utils)}
+\title{maintaineR}
 \description{
-  extractoR.utils is part of extractoR which is a set of R packages
-  that can be used to fetch, extract and dump CRAN packages metadata in
-  a SQL database. extractoR.utils contains utilities functions.
+  maintaineR contains functions to analyse CRAN packages depencies,
+  conflicts and clones.
 }
 
 \author{
-Maëlick Claes <himself@maelick.net>, Philippe Grosjean
-<Philippe.Grosjean@umons.ac.be> & Prateek Rastogi
-<p.rastogi@outlook.com>
+Maëlick Claes <himself@maelick.net>
 
 Maintainer: Maëlick Claes <himself@maelick.net>
 }
