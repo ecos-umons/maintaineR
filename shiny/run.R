@@ -1,2 +1,2 @@
 library(shiny)
-runApp("maintaineR-shiny")
+runApp("maintaineR-shiny", port=3333)
