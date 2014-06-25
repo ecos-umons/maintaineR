@@ -21,15 +21,17 @@ GraphSubset(graph, nodes, type)
   \item{nodes}{A character vector containing package name}
   \item{type}{Direcotion of the dependency ("out" for dependency and
     "in" for reverse dependency).}
+  \item{in.dist}{Only packages with a greater or equal distance to one
+    of the nodes will be considerd.}
   \item{max.dist}{Only packages with a strictly smaller distance to one
-    of the nodes will be considerd}
+    of the nodes will be considerd.}
 }
 \value{
   \code{DependencyGraph} returns the dependency graph for a given state
   of CRAN.
 
   \code{Dependencies} returns all packages reachable in the graph from
-  or to a set of packages that do not exceed the maximum distance given.
+  or to a set of packages regarding minimum and maximum distances.
 
   \code{GraphSubset} returns the subset of the dependency graph
   including as nodes all nodes returned by \code{Dependencies}.
