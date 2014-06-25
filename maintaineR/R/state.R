@@ -39,7 +39,7 @@ StateData <- function(cran, datadir, params=list()) {
     deps <- DependencyGraph(cran$deps, state)
     code <- ReadDataFile(file.path(datadir, "functions", filename))
     clones <- Clones(package, version, cran)
-    namespace <- ReadDataFile(file.path(datadir, "namespaces", filename))$res
+    namespace <- ReadDataFile(file.path(datadir, "namespaces", filename))
     conflicts <- Conflicts(package, version, cran)
     list(date=date, packages=state, package=package, version=version,
          versions=versions, descfile=descfile, deps=deps,
