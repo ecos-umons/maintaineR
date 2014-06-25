@@ -10,7 +10,7 @@
 
 \usage{
 DependencyGraph(deps, state, types=c("depends", "imports", "linkingto"))
-Dependencies(graph, nodes, type="out")
+Dependencies(graph, nodes, type="out", max.dist=Inf)
 GraphSubset(graph, nodes, type)
 }
 \arguments{
@@ -21,13 +21,15 @@ GraphSubset(graph, nodes, type)
   \item{nodes}{A character vector containing package name}
   \item{type}{Direcotion of the dependency ("out" for dependency and
     "in" for reverse dependency).}
+  \item{max.dist}{Only packages with a strictly smaller distance to one
+    of the nodes will be considerd}
 }
 \value{
   \code{DependencyGraph} returns the dependency graph for a given state
   of CRAN.
 
   \code{Dependencies} returns all packages reachable in the graph from
-  or to a set of packages.
+  or to a set of packages that do not exceed the maximum distance given.
 
   \code{GraphSubset} returns the subset of the dependency graph
   including as nodes all nodes returned by \code{Dependencies}.
