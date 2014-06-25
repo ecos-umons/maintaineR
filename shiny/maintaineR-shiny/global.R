@@ -61,8 +61,12 @@ RenderFunctions <- function(functions) {
   tagList(p(refs), tags$pre(functions[[1]]$body))
 }
 
-RenderClones <- function(package, code, clones, sort, filter1, filter2) {
+RenderClones <- function(package, packages, code, clones, sort,
+                         filter.size, filter.loc, filters) {
   if (!is.null(package)) {
+    if ("cran" %in% filters) {
+      clones <- merge(clones, packages[c("package", "version")])
+    }
     clones <- switch(sort,
                      alpha=clones[order(apply(clones, 1, PackageFullName)), ],
                      old=clones[order(clones$mtime), ])
@@ -79,7 +83,7 @@ RenderClones <- function(package, code, clones, sort, filter1, filter2) {
       res$Packages <- split(apply(clones, 1, function(p) {
         tagList(a(href=PackageLink(p), PackageFullName(p)), br())
       }), as.character(clones$hash))[res$Hash]
-      res <- res[res$Size >= filter1 & res$LOC >= filter2,
+      res <- res[res$Size >= filter.size & res$LOC >= filter.loc,
                  c("Functions", "Size", "LOC", "Packages", "Hash")]
       if (nrow(res)) {
         res <- res[order(-res$Size, res$Hash), ]
@@ -116,23 +120,40 @@ RenderDepsList <- function(package, deps, date) {
   }
 }
 
-RenderNamespace <- function(package, version, namespace, conflicts, sort) {
-  if (!is.null(package)) {
+RenderNamespace <- function(package, packages, deps, namespace, conflicts,
+                            sort, filters) {
+  if (!is.null(package) & !is.null(namespace)) {
+    if ("functions" %in% filters) {
+      conflicts <- conflicts[conflicts$type == "function", ]
+      namespace <- namespace[sapply(namespace, function(f) {
+        "function" %in% f$type
+      })]
+    }
+    if ("cran" %in% filters) {
+      conflicts <- merge(conflicts, packages[c("package", "version")])
+    }
+    if ("siblings" %in% filters) {
+      reverse <- Dependencies(deps, package, "in", 1, 2)
+      siblings <- Dependencies(deps, reverse, "out", 1, 2)
+      conflicts <- conflicts[conflicts$package %in% siblings, ]
+    }
+    if ("conflicts" %in% filters) {
+      names <- sapply(namespace, function(f) f$name)
+      namespace <- namespace[names %in% conflicts$name]
+    }
     c <- switch(sort,
                 alpha=conflicts[order(apply(conflicts, 1, PackageFullName)), ],
                 old=conflicts[order(conflicts$mtime), ])
-    if (!is.null(namespace)) {
-      res <- data.frame(Name=sapply(namespace, function(x) x$name),
-                        Type=sapply(namespace,
-                          function(x) paste(unique(x$type), collapse=", ")))
-      confs <- split(apply(c, 1, function(p) {
-        tagList(a(href=PackageLink(p), PackageFullName(p)), br())
-      }), as.character(c$name))[res$Name]
-      res$Conflicts <- lapply(as.character(res$Name), function(n) {
-        if (n %in% names(confs)) confs[[n]] else "None"
-      })
-      MakeTable(res)
-    }
+    res <- data.frame(Name=sapply(namespace, function(x) x$name),
+                      Type=sapply(namespace,
+                        function(x) paste(unique(x$type), collapse=", ")))
+    confs <- split(apply(c, 1, function(p) {
+      tagList(a(href=PackageLink(p), PackageFullName(p)), br())
+    }), as.character(c$name))[res$Name]
+    res$Conflicts <- lapply(as.character(res$Name), function(n) {
+      if (n %in% names(confs)) confs[[n]] else "None"
+    })
+    MakeTable(res)
   }
 }
 

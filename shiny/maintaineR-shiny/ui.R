@@ -52,11 +52,16 @@ shinyUI(fluidPage(
       "Namespace",
       sidebarLayout(
         sidebarPanel(
-          radioButtons("namespace.sort", "Sort objects by",
-                       c("Name"="name")),
-          radioButtons("namespace.sort2", "Sort conflict packages by",
+          ## radioButtons("namespace.sort", "Sort objects by",
+          ##              c("Name"="name")),
+          radioButtons("namespace.sort", "Sort conflict packages by",
                        c("Oldest first"="old",
                          "Alphabetical"="alpha")),
+          checkboxGroupInput("namespace.filters", "Show only",
+                             c("Functions"="functions",
+                               "Conflicts"="conflicts",
+                               "Last CRAN version"="cran",
+                               "Sibling packages"="siblings")),
           width=2),
         mainPanel(uiOutput("namespace")))
     ),
@@ -64,13 +69,15 @@ shinyUI(fluidPage(
       "Clones",
       sidebarLayout(
         sidebarPanel(
-          numericInput("clones.filter", "Minimum clone AST size", 10, 0),
-          numericInput("clones.filter2", "Minimum clone LOC", 3, 0),
-          radioButtons("clones.sort", "Sort clones by",
-                       c("Size"="size")),
-          radioButtons("clones.sort2", "Sort packages by",
+          numericInput("clones.filter.size", "Minimum clone AST size", 10, 0),
+          numericInput("clones.filter.loc", "Minimum clone LOC", 3, 0),
+          ## radioButtons("clones.sort", "Sort clones by",
+          ##              c("Size"="size")),
+          radioButtons("clones.sort", "Sort packages by",
                        c("Oldest first"="old",
                          "Alphabetical"="alpha")),
+          checkboxGroupInput("clones.filters", "Show only",
+                             c("Last CRAN version"="cran")),
           width=2),
         mainPanel(uiOutput("clones")))
     )

@@ -8,9 +8,10 @@ shinyServer(function(input, output, session) {
                   data()$state, data()$descfile)
   })
   output$clones <- renderUI({
-    RenderClones(data()[["package"]], data()$code,
-                 data()$clones, input$clones.sort2,
-                 input$clones.filter, input$clones.filter2)
+    RenderClones(data()[["package"]], data()$packages, data()$code,
+                 data()$clones, input$clones.sort,
+                 input$clones.filter.size, input$clones.filter.loc,
+                 input$clones.filters)
   })
   output$depsgraph <- renderPrint({
     RenderDepsGraph(data()[["package"]], data()$deps,
@@ -20,9 +21,10 @@ shinyServer(function(input, output, session) {
     RenderDepsList(data()[["package"]], data()$deps, data()$date)
   })
   output$namespace <- renderUI({
-    RenderNamespace(data()[["package"]], data()$version,
+    ## print(data()$conflicts)
+    RenderNamespace(data()[["package"]], data()$packages, data()$deps,
                     data()$namespace, data()$conflicts,
-                    input$namespace.sort2)
+                    input$namespace.sort, input$namespace.filters)
   })
   output$history <- renderPlot({
     RenderHistory(data()[["package"]], data()$deps,
