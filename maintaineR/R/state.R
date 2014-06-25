@@ -35,7 +35,7 @@ StateData <- function(cran, datadir, params=list()) {
     versions <- cran$packages[cran$packages$package == package, ]
     version <- state[state$package == package, ]$version
     filename <- sprintf("%s_%s.rds", package, version)
-    descfile <- ReadDataFile(file.path(datadir, "descfiles", filename))[[1]]
+    descfile <- ReadDataFile(file.path(datadir, "descfiles", filename))
     deps <- DependencyGraph(cran$deps, state)
     code <- ReadDataFile(file.path(datadir, "functions", filename))
     clones <- Clones(package, version, cran)
