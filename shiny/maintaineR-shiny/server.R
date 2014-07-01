@@ -21,7 +21,6 @@ shinyServer(function(input, output, session) {
     RenderDepsList(data()[["package"]], data()$deps, data()$date)
   })
   output$namespace <- renderUI({
-    ## print(data()$conflicts)
     RenderNamespace(data()[["package"]], data()$packages, data()$deps,
                     data()$namespace, data()$conflicts,
                     input$namespace.sort, input$namespace.filters)

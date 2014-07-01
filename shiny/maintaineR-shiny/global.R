@@ -3,7 +3,7 @@ library(igraph)
 library(timeline)
 library(maintaineR)
 
-datadir <- "../../data"
+datadir <- "../../data_test"
 cran <- ReadCRANData(datadir)
 
 PackageFullName <- function(p) {
@@ -44,6 +44,8 @@ RenderSummary <- function(package, date, packages, descfile) {
       tags$a(href=sprintf("?p=%s&d=%s", p["package"], date), p["package"])
     })
     MakeTable(res)
+  } else if (is.null(descfile)) {
+    "No DESCRIPTION file to display"
   } else if (nrow(descfile)) {
     MakeTable(descfile)
   }
@@ -63,7 +65,7 @@ RenderFunctions <- function(functions) {
 
 RenderClones <- function(package, packages, code, clones, sort,
                          filter.size, filter.loc, filters) {
-  if (!is.null(package)) {
+  if (!is.null(code)) {
     if ("cran" %in% filters) {
       clones <- merge(clones, packages[c("package", "version")])
     }
@@ -90,6 +92,8 @@ RenderClones <- function(package, packages, code, clones, sort,
         MakeTable(res)
       }
     }
+  } else {
+    "No clones to display"
   }
 }
 
@@ -122,7 +126,7 @@ RenderDepsList <- function(package, deps, date) {
 
 RenderNamespace <- function(package, packages, deps, namespace, conflicts,
                             sort, filters) {
-  if (!is.null(package) & !is.null(namespace)) {
+  if (!is.null(namespace)) {
     if ("functions" %in% filters) {
       conflicts <- conflicts[conflicts$type == "function", ]
       namespace <- namespace[sapply(namespace, function(f) {
@@ -154,6 +158,8 @@ RenderNamespace <- function(package, packages, deps, namespace, conflicts,
       if (n %in% names(confs)) confs[[n]] else "None"
     })
     MakeTable(res)
+  } else {
+    "No namespace to display"
   }
 }
 
