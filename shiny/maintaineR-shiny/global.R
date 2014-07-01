@@ -3,7 +3,7 @@ library(igraph)
 library(timeline)
 library(maintaineR)
 
-datadir <- "../../data_test"
+datadir <- "../../data"
 cran <- ReadCRANData(datadir)
 
 PackageFullName <- function(p) {
