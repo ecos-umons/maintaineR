@@ -3,6 +3,7 @@ importFrom(rCharts, rCharts)
 importFrom(d3Network, d3ForceNetwork)
 
 export(ReadCRANData)
+export(State)
 export(StateData)
 export(PackageHistory)
 export(DependencyGraph, Dependencies, GraphSubset)
