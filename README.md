@@ -37,7 +37,11 @@ list and namespaces) for the last version of the specified packages as
 arguments, their dependencies and the packages with which they have
 conflicts or clones. Options can be changed in the script to download
 more data like reverse dependencies and all versions of the other
-packages.
+packages. This script requires:
+
+* maintaineR package
+* igraph
+* RCurl
 
 Usage
 -----
