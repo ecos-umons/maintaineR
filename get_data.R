@@ -1,8 +1,6 @@
 args <- commandArgs(trailingOnly=TRUE)
 dest.root <- args[1]
-dest.root <- "data_test"
 my.packages <- args[-1]
-my.packages <- c("XML")
 only.last <- TRUE
 download.deps <- TRUE
 download.rev.deps <- FALSE
@@ -12,6 +10,11 @@ clones.filter.ast <- 10
 clones.filter.loc <- 3
 url.root <- "https://raw.githubusercontent.com/maelick/CRANData/master"
 update <- TRUE
+
+if (length(args) < 2) {
+  stop("Please run the command as:
+       get_data.R <datadir> <packageA> <packageB> ...")
+}
 
 library(RCurl)
 library(maintaineR)
