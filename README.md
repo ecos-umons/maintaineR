@@ -74,3 +74,11 @@ Finally shiny web app can be run width the following commands:
 cd shiny
 Rscript shiny/run.R
 ```
+
+Demo
+----
+
+A screencast demo is available on
+[Youtube](https://www.youtube.com/watch?v=q3RWTsVnPqg) and
+presentation slides from useR 2014
+[here](http://maelick.net/presentations/user2014).
