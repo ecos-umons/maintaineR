@@ -1,2 +1,2 @@
 library(shiny)
-runApp("maintaineR-shiny", port=3333)
+shiny::runApp(system.file("webapp", package="maintaineR"), port=3000)
