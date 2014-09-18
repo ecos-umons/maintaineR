@@ -9,7 +9,7 @@ RenderSankey <- function(graph, id=NULL) {
   edgelist$source <- as.character(edgelist$source)
   edgelist$target <- as.character(edgelist$target)
   sankeyPlot <- rCharts$new()
-  sankeyPlot$setLib('lib/rCharts_d3_sankey/libraries/widgets/d3_sankey')
+  sankeyPlot$setLib('www/lib/rCharts_d3_sankey/libraries/widgets/d3_sankey')
   sankeyPlot$set(data=edgelist,
                  nodeWidth=15,
                  nodePadding=10,
