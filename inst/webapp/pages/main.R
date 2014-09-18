@@ -24,15 +24,14 @@ RenderTitle <- function(package, version, date) {
 }
 
 output$main <- renderUI({
+  title <- RenderTitle(package(), version(), date())
   if (is.null(package())) {
-    fluidPage(titlePanel("Please select a package from the list",
-                         "maintaineR - CRAN dashboard"),
-              mainPanel(uiOutput("pkglist")))
+    fluidPage(titlePanel("maintaineR - CRAN dashboard"),
+              uiOutput("data"))
   } else {
-    title <- RenderTitle(package(), version(), date())
     navbarPage(
-      sprintf("%s - maintaineR CRAN dashboard", title),
-      inverse=TRUE, collapsable=TRUE,
+      "maintaineR - CRAN dashboard",
+      header=h3(title), inverse=TRUE, collapsable=TRUE,
       tabPanel("Summary", uiOutput("summary")),
       tabPanel("History", uiOutput("history")),
       navbarMenu("Dependencies",
