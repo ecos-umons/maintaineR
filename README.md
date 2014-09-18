@@ -14,34 +14,29 @@ maintaineR package depends on the following packages:
 * igraph
 * rCharts
 * d3Network
+* RCurl
 
 The web dashboard depends on the following additional packages:
 
 * timeline
 * [extractoR.utils](https://github.com/maelick/extractoR/tree/utils)
 
-You will also need data. Those can either be extracted using
+You will also need data. The entire data set can be obtained from our
+[CRANData](https://github.com/maelick/CRANData) repository. However
+the Shiny web app allows one to download only a subset of the data.
+
+Available online data was extracted using
 [extractoR](https://github.com/maelick/extractoR),
 [timetraveleR](https://github.com/maelick/timetraveleR) and
-[cloneR](https://github.com/maelick/cloneR) or by getting serialized
-data we previously extracted at
-[CRANData](https://github.com/maelick/CRANData).
+[cloneR](https://github.com/maelick/cloneR).
 
-maintaineR's repository contains a script get_data.R that can get a
-subset of CRANData so one's doesn't have to download all the data
-which amounts many gigabytes. This allows you to download only data
-files you need for a subset of packages. By default it will download
-general CRAN data (packages, dependencies, conflicts and clones) and
-will only download packages specific data (DESCRIPTION file, functions
-list and namespaces) for the last version of the specified packages as
-arguments, their dependencies and the packages with which they have
-conflicts or clones. Options can be changed in the script to download
-more data like reverse dependencies and all versions of the other
-packages. This script requires:
-
-* maintaineR package
-* igraph
-* RCurl
+This allows you to download only data files you need for a subset of
+packages. By default the Shiny app will download general CRAN data
+(packages, dependencies, conflicts and clones) and will only download
+packages specific data (DESCRIPTION file, functions list and
+namespaces) when requested by the user. Options allows one to download
+more data with each selected package like direct and reverse
+dependencies, conflicting packages and cloned packages.
 
 Usage
 -----
@@ -59,21 +54,21 @@ R CMD INSTALL maintaineR
 Then data are needed, they can be gotten either:
 
 ```shell
-git clone https://github.com/maelick/CRANData.git data
+git clone https://github.com/maelick/CRANData.git <dest>
 ```
 
-Or:
+Or by using maintaineR shiny web app.
+
+Finally shiny web app can be run with the following commands:
 
 ```shell
-Rscript get_data.R data PackageA PackageB
+Rscript shiny-webapp.R
 ```
 
-Finally shiny web app can be run width the following commands:
-
-```shell
-cd shiny
-Rscript shiny/run.R
-```
+By default the app will store downloaded data in the package
+installation folder (inside "data" subfolder). If all data are
+retrieved using git, they must be stored there. Alternately the
+directory where data are stored can be modified in shiny-webapp.R.
 
 Demo
 ----
