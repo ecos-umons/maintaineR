@@ -3,20 +3,19 @@
 \encoding{UTF-8}
 \title{Clones}
 \description{
-  Return the list of clones in a given package.
+  Return the list of clones in a set of given packages.
 }
 
 \usage{
-Clones(package, version, cran)
+Clones(packages, cran)
 }
 \arguments{
-  \item{package}{Package name.}
-  \item{version}{The version of the package.}
+  \item{packages}{Packages data.frame.}
   \item{cran}{CRAN data.}
 }
 \value{
-  Returns a data.frame containing the list of functions duplicated in
-  other CRAN packages.
+  Returns a data.frame containing the list of functions from packages
+  which are duplicated in other CRAN packages.
 }
 
 \author{

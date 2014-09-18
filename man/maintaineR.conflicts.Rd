@@ -3,20 +3,20 @@
 \encoding{UTF-8}
 \title{Conflicts}
 \description{
-  Return the list of conflicts in a given package.
+  Return the list of conflicts in a set of given packages.
 }
 
 \usage{
-Conflicts(package, version, cran)
+Conflicts(packages, cran)
 }
 \arguments{
-  \item{package}{Package name.}
-  \item{version}{The version of the package.}
+  \item{packages}{Packages data.frame.}
   \item{cran}{CRAN data.}
 }
 \value{
-  Returns a data.frame containing the list of objects which name is in
-  conflict with another object name in other CRAN packages.
+  Returns a data.frame containing the list of objects from packages
+  which names are in conflict with another object name in other CRAN
+  packages.
 }
 
 \author{
