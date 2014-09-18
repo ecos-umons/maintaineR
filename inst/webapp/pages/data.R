@@ -71,8 +71,10 @@ DownloadWithProgress <- function(todl, options, session, config, datadir) {
 
 output$data.table <- renderUI({
   res <- DataState(data.state.sub(), datadir)
-  res$Download <- lapply(sprintf("download %s %s", res$Package, res$Version),
-                         checkboxInput, "")
+  if (config$AllowDownload) {
+    res$Download <- lapply(sprintf("download %s %s", res$Package, res$Version),
+                           checkboxInput, "")
+  }
   res$Package <- lapply(res$Package, function(p) {
     tags$a(href=sprintf("?p=%s&d=%s", p, date()), p)
   })
