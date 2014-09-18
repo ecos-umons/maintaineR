@@ -40,7 +40,8 @@ output$main <- renderUI({
         tabPanel("Graph", uiOutput("depsgraph"))
       ),
       tabPanel("Namespace", uiOutput("namespace")),
-      tabPanel("Clones", uiOutput("clones")))
+      tabPanel("Clones", uiOutput("clones")),
+      tabPanel("Data", uiOutput("data")))
   }
 })
 

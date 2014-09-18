@@ -8,4 +8,5 @@ shinyServer(function(input, output, session) {
   source("pages/depsgraph.R", local=TRUE)
   source("pages/namespace.R", local=TRUE)
   source("pages/clones.R", local=TRUE)
+  source("pages/data.R", local=TRUE)
 })

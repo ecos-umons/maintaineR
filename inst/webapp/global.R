@@ -2,6 +2,7 @@ library(extractoR.utils)
 library(igraph)
 library(timeline)
 library(maintaineR)
+library(shinyIncubator)
 
 if (!exists("datadir")) {
   stop("Please define a datadir variable.")
@@ -19,8 +20,21 @@ if (!file.exists(config)) {
 }
 
 config <- as.list(read.dcf(config)[1, ])
+config$Update <- as.logical(config$Update)
+config$AllowDownload <- as.logical(config$AllowDownload)
+
+DownloadDataFile("rds/packages.rds", datadir, config$RootURL, !config$Update)
+DownloadDataFile("rds/deps.rds", datadir, config$RootURL, !config$Update)
+DownloadDataFile("clones.rds", datadir, config$RootURL, !config$Update)
+DownloadDataFile("conflicts.rds", datadir, config$RootURL, !config$Update)
 
 cran <- ReadCRANData(datadir)
+cran$deps.all <- {
+  packages <- cran$packages[c("package", "version")]
+  deps <- merge(packages, cran$deps)
+  deps <- deps[deps$dependency %in% packages$package, ]
+  DependencyGraph(deps, packages)
+}
 
 PackageFullName <- function(p) {
   paste(p["package"], p["version"], sep="_")
