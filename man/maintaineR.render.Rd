@@ -9,11 +9,12 @@
 }
 
 \usage{
-RenderSankey(graph)
-RenderGraph(graph)
+RenderSankey(graph, id=NULL)
+RenderGraph(graph, id=NULL)
 }
 \arguments{
   \item{graph}{Dependency graph.}
+  \item{id}{Id of the HTML element.}
 }
 \value{
   \code{RenderSankey} renders the graph using rCharts sankey
