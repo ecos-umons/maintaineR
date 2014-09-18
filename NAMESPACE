@@ -1,8 +1,9 @@
 import(igraph)
+import(RCurl)
 importFrom(rCharts, rCharts)
 importFrom(d3Network, d3ForceNetwork)
 
-export(ReadCRANData)
+export(ReadCRANData, DownloadDataFile, DataState, PackagesToDownload)
 export(State)
 export(PackageHistory)
 export(DependencyGraph, Dependencies, GraphSubset)
