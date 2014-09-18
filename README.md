@@ -19,6 +19,7 @@ maintaineR package depends on the following packages:
 The web dashboard depends on the following additional packages:
 
 * timeline
+* shinyIncubator
 * [extractoR.utils](https://github.com/maelick/extractoR/tree/utils)
 
 You will also need data. The entire data set can be obtained from our
