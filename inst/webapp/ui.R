@@ -13,5 +13,6 @@ shinyUI(tagList(
         width: 960px;
         height: 700px;
       }")),
+  progressInit(),
   uiOutput("main")
 ))
