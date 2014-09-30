@@ -18,6 +18,7 @@ maintaineR package depends on the following packages:
 
 The web dashboard depends on the following additional packages:
 
+* shiny
 * timeline
 * shinyIncubator
 * [extractoR.utils](https://github.com/maelick/extractoR/tree/utils)
@@ -44,12 +45,12 @@ Usage
 
 First download and install required packages:
 
-```shell
-git clone https://github.com/maelick/extractoR.git
-R CMD INSTALL extractoR/extractoR.utils
-git clone https://github.com/maelick/maintaineR.git
-cd maintaineR
-R CMD INSTALL maintaineR
+```R
+install.packages(c("igraph", "d3Network", "shiny", "RCurl", "devtools"))
+devtools::install_github("rstudio/shiny-incubator")
+devtools::install_github("ramnathv/rCharts")
+devtools::install_github("ecos-umons/extractoR/extractoR.utils")
+devtools::install_github("ecos-umons/maintaineR")
 ```
 
 Then data are needed, they can be gotten either:
@@ -60,16 +61,17 @@ git clone https://github.com/maelick/CRANData.git <dest>
 
 Or by using maintaineR shiny web app.
 
-Finally shiny web app can be run with the following commands:
+Finally shiny web app can be run:
 
-```shell
-Rscript shiny-webapp.R
+```R
+shiny::runApp(system.file("webapp", package="maintaineR"), port=3000)
 ```
 
 By default the app will store downloaded data in the package
 installation folder (inside "data" subfolder). If all data are
 retrieved using git, they must be stored there. Alternately the
-directory where data are stored can be modified in shiny-webapp.R.
+directory where data are stored can be modified in by defining a
+"datadir" variable before running the app.
 
 Demo
 ----

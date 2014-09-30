@@ -5,7 +5,7 @@ library(maintaineR)
 library(shinyIncubator)
 
 if (!exists("datadir")) {
-  stop("Please define a datadir variable.")
+  datadir <- "data"
 }
 
 if (!file.exists(datadir)) {
