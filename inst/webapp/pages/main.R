@@ -26,8 +26,12 @@ RenderTitle <- function(package, version, date) {
 output$main <- renderUI({
   title <- RenderTitle(package(), version(), date())
   if (is.null(package())) {
-    fluidPage(titlePanel("maintaineR - CRAN dashboard"),
-              uiOutput("data"))
+    navbarPage(
+      "maintaineR - CRAN dashboard",
+      inverse=TRUE, collapsable=TRUE,
+      tabPanel("Data", uiOutput("data")),
+      tabPanel("Conflicts overview", uiOutput("conflicts.cran")),
+      tabPanel("Clones overview", uiOutput("clones.cran")))
   } else {
     navbarPage(
       "maintaineR - CRAN dashboard",

@@ -1,8 +1,11 @@
 library(extractoR.utils)
+library(data.table)
 library(igraph)
 library(timeline)
 library(maintaineR)
 library(shinyIncubator)
+library(scales)
+library(ggplot2)
 
 if (!exists("datadir")) {
   datadir <- "../data"
