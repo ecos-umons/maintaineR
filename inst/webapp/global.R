@@ -7,7 +7,7 @@ library(scales)
 library(ggplot2)
 
 if (!exists("datadir")) {
-  datadir <- "../data"
+  datadir <- "../cran-data"
 }
 
 if (!file.exists(datadir)) {
