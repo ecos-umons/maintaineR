@@ -11,31 +11,28 @@ RenderFunctions <- function(functions) {
 }
 
 RenderClones <- function(package, packages, code, clones, sort,
-                         filter.size, filter.loc, filters) {
+                         filter.size, filter.loc) {
   if (!is.null(code)) {
-    if ("cran" %in% filters) {
-      clones <- merge(clones, packages[c("package", "version")])
-    }
-    clones <- switch(sort,
-                     alpha=clones[order(apply(clones, 1, PackageFullName)), ],
-                     old=clones[order(clones$mtime), ])
+    clones <- merge(clones[size >= filter.size & loc >= filter.loc],
+                    packages[, list(package, version, mtime)])
+    print(clones)
+    switch(sort, alpha=setkey(clones, package, version),
+           old=setkey(clones, mtime))
     if (nrow(clones)) {
-      res <- data.frame(Hash=unique(as.character(clones$hash)),
-                        stringsAsFactors=FALSE)
-      res$Functions <- lapply(res$Hash, function(f) code[[f]])
-      res$Size <- sapply(res$Functions, function(f) f[[1]]$size)
-      res$LOC <- sapply(res$Functions, function(f) {
-        length(strsplit(f[[1]]$body, "\n")[[1]])
-      })
-      res$Functions <- lapply(lapply(res$Hash, function(f) code[[f]]),
-                              RenderFunctions)
-      res$Packages <- split(apply(clones, 1, function(p) {
-        tagList(a(href=PackageLink(p), PackageFullName(p)), br())
-      }), as.character(clones$hash))[res$Hash]
-      res <- res[res$Size >= filter.size & res$LOC >= filter.loc,
-                 c("Functions", "Size", "LOC", "Packages", "Hash")]
+      hashes <- unique(as.character(clones$hash))
+      functions <- lapply(hashes, function(f) code[[f]])
+      res <- data.table(Function=lapply(lapply(hashes, function(f) code[[f]]),
+                                                RenderFunctions),
+                        Size=sapply(functions, function(f) f[[1]]$size),
+                        LOC=sapply(functions, function(f) {
+                          length(strsplit(f[[1]]$body, "\n")[[1]])
+                        }),
+                        Packages=split(apply(clones, 1, function(p) {
+                          tagList(a(href=PackageLink(p), PackageFullName(p)), br())
+                        }), as.character(clones$hash))[hashes],
+                        Hash=hashes)
       if (nrow(res)) {
-        res <- res[order(-res$Size, res$Hash), ]
+        setorder(res, -Size, Hash)
         MakeTable(res)
       }
     }
@@ -60,9 +57,9 @@ output$clones <- renderUI(list(
 ))
 
 output$clones.table <- renderUI({
-    RenderClones(package(), state(), code(), clones(), input$clones.sort,
-                 input$clones.filter.size, input$clones.filter.loc,
-                 input$clones.filters)
+  packages <- if ("cran" %in% input$clones.filters) state() else cran$packages
+  RenderClones(package(), packages, code(), clones(), input$clones.sort,
+               input$clones.filter.size, input$clones.filter.loc)
 })
 
 ClonesMetrics <- function(clones) {
@@ -118,7 +115,7 @@ output$clones.cran <- renderUI(list(
 ))
 
 clones.metrics <- reactive({
-  packages <- state()[c("package", "version", "mtime")]
+  packages <- state()[, list(package, version, mtime)]
   packages <- data.table(packages, key=c("package", "version"))
 
   clones <- data.table(cran$clones, key=c("package", "version", "hash"))

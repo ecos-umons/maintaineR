@@ -59,5 +59,16 @@ ReadCRANData <- function(datadir) {
               clones=readRDS(file.path(datadir, "clones.rds")),
               conflicts=readRDS(file.path(datadir, "conflicts.rds")))
   res$packages <- res$packages[!is.na(res$packages$mtime), ]
+  res$conflicts$package <- as.character(res$conflicts$package)
+  res$conflicts$version <- as.character(res$conflicts$version)
+  res$conflicts$name <- as.character(res$conflicts$name)
+  res$clones$package <- as.character(res$clones$package)
+  res$clones$version <- as.character(res$clones$version)
+  res$clones$hash <- as.character(res$clones$hash)
+  res <- lapply(res, as.data.table)
+  setkey(res$packages, package, version)
+  setkey(res$deps, package, version, type, dependency)
+  setkey(res$clones, package, version, hash)
+  setkey(res$conflicts, package, version, name)
   res
 }

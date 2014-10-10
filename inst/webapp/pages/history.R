@@ -8,9 +8,9 @@ RenderHistory <- function(package, deps, type, range) {
       if ("revdeps" %in% type) {
         packages <- union(packages, Dependencies(deps, package, "in"))
       }
-      history <- lapply(packages, PackageHistory, cran, range)
+      history <- lapply(packages, PackageHistory, cran$packages, range)
       history <- history[sapply(history, nrow) > 0]
-      print(timeline(FlattenDF(history)))
+      print(timeline(rbindlist(history)))
     }
   }
 }

@@ -2,26 +2,24 @@ RenderNamespace <- function(package, packages, deps, namespace, conflicts,
                             sort, filters) {
   if (!is.null(namespace)) {
     if ("functions" %in% filters) {
-      conflicts <- conflicts[conflicts$type == "function", ]
+      conflicts <- conflicts[type == "function"]
       namespace <- namespace[sapply(namespace, function(f) {
         "function" %in% f$type
       })]
     }
-    if ("cran" %in% filters) {
-      conflicts <- merge(conflicts, packages[c("package", "version")])
-    }
+    conflicts <- merge(conflicts, packages)
     if ("siblings" %in% filters) {
       reverse <- Dependencies(deps, package, "in", 1, 2)
       siblings <- Dependencies(deps, reverse, "out", 1, 2)
-      conflicts <- conflicts[conflicts$package %in% siblings, ]
+      conflicts <- conflicts[package %in% siblings]
     }
     if ("conflicts" %in% filters) {
       names <- sapply(namespace, function(f) f$name)
       namespace <- namespace[names %in% conflicts$name]
     }
     c <- switch(sort,
-                alpha=conflicts[order(apply(conflicts, 1, PackageFullName)), ],
-                old=conflicts[order(conflicts$mtime), ])
+                alpha=setkey(conflicts, package, version),
+                old=setkey(conflicts, mtime))
     res <- data.frame(Name=sapply(namespace, function(x) x$name),
                       Type=sapply(namespace,
                         function(x) paste(unique(x$type), collapse=", ")))
@@ -54,6 +52,7 @@ output$namespace <- renderUI(list(
 ))
 
 output$namespace.table <- renderUI({
-  RenderNamespace(package(), state(), deps(), namespace(), conflicts(),
+  packages <- if ("cran" %in% input$clones.filters) state() else cran$packages
+  RenderNamespace(package(), packages, deps(), namespace(), conflicts(),
                   input$namespace.sort, input$namespace.filters)
 })

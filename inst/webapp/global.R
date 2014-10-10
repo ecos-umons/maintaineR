@@ -1,4 +1,3 @@
-library(extractoR.utils)
 library(data.table)
 library(igraph)
 library(timeline)
@@ -32,8 +31,9 @@ DownloadDataFile("clones.rds", datadir, config$RootURL, !config$Update)
 DownloadDataFile("conflicts.rds", datadir, config$RootURL, !config$Update)
 
 cran <- ReadCRANData(datadir)
+
 cran$deps.all <- {
-  packages <- cran$packages[c("package", "version")]
+  packages <- cran$packages[, list(package, version)]
   deps <- merge(packages, cran$deps)
   deps <- deps[deps$dependency %in% packages$package, ]
   DependencyGraph(deps, packages)

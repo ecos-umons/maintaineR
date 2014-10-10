@@ -5,11 +5,12 @@ core.packages <- c("R", "base", "compiler", "datasets", "graphics",
 
 DependencyGraph <- function(deps, state,
                             types=c("depends", "imports", "linkingto")) {
-  deps <- merge(deps[!deps$dependency %in% core.packages, ], state)
-  deps <- deps[deps$type %in% types, c("package", "dependency", "type")]
+  deps <- merge(setkey(copy(deps), dependency)[!core.packages], state,
+                by=c("package", "version"))
+  deps <- setkey(deps, type)[types][, list(package, dependency)]
   packages <- unique(union(state$package, deps$dependency))
   g <- graph.empty(directed=TRUE) + vertices(packages)
-  g + edges(apply(deps, 1, function(e) c(e["package"], e["dependency"])))
+  g + edges(t(as.matrix(deps)))
 }
 
 Dependencies <- function(graph, nodes, type="out", min.dist=0, max.dist=Inf) {
