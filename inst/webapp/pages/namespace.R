@@ -1,6 +1,7 @@
 RenderNamespace <- function(package, packages, deps, namespace, conflicts,
                             sort, filters) {
   if (!is.null(namespace)) {
+    conflicts <- merge(conflicts, packages[, list(package, version)])
     if ("functions" %in% filters) {
       conflicts <- conflicts[type == "function"]
       namespace <- namespace[sapply(namespace, function(f) {
@@ -52,7 +53,7 @@ output$namespace <- renderUI(list(
 ))
 
 output$namespace.table <- renderUI({
-  packages <- if ("cran" %in% input$clones.filters) state() else cran$packages
+  packages <- if ("cran" %in% input$namespace.filters) state() else cran$packages
   RenderNamespace(package(), packages, deps(), namespace(), conflicts(),
                   input$namespace.sort, input$namespace.filters)
 })

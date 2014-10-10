@@ -38,7 +38,7 @@ code <- reactive({
 })
 
 clones <- reactive({
-  Clones(list(package(), version()), cran)
+  ClonesWith(list(package(), version()), cran)
 })
 
 namespace <- reactive({
@@ -47,5 +47,5 @@ namespace <- reactive({
 })
 
 conflicts <- reactive({
-  Conflicts(list(package(), version()), cran)
+  ConflictsWith(list(package(), version()), cran)
 })

@@ -15,21 +15,21 @@ RenderClones <- function(package, packages, code, clones, sort,
   if (!is.null(code)) {
     clones <- merge(clones[size >= filter.size & loc >= filter.loc],
                     packages[, list(package, version, mtime)])
-    print(clones)
     switch(sort, alpha=setkey(clones, package, version),
            old=setkey(clones, mtime))
     if (nrow(clones)) {
       hashes <- unique(as.character(clones$hash))
       functions <- lapply(hashes, function(f) code[[f]])
       res <- data.table(Function=lapply(lapply(hashes, function(f) code[[f]]),
-                                                RenderFunctions),
+                                               RenderFunctions),
                         Size=sapply(functions, function(f) f[[1]]$size),
                         LOC=sapply(functions, function(f) {
                           length(strsplit(f[[1]]$body, "\n")[[1]])
                         }),
-                        Packages=split(apply(clones, 1, function(p) {
-                          tagList(a(href=PackageLink(p), PackageFullName(p)), br())
-                        }), as.character(clones$hash))[hashes],
+                        Packages=split(apply(clones, 1,
+                          function(p) {
+                            tagList(a(href=PackageLink(p), PackageFullName(p)), br())
+                          }), as.character(clones$hash))[hashes],
                         Hash=hashes)
       if (nrow(res)) {
         setorder(res, -Size, Hash)
