@@ -13,8 +13,10 @@ DependencyGraph <- function(deps, state,
 }
 
 Dependencies <- function(graph, nodes, type="out", min.dist=0, max.dist=Inf) {
-  paths <- apply(shortest.paths(graph, nodes, mode=type), 2, min)
-  names(paths)[min.dist <= paths & paths < max.dist]
+  if (length(nodes)) {
+    paths <- apply(shortest.paths(graph, nodes, mode=type), 2, min)
+    names(paths)[min.dist <= paths & paths < max.dist]
+  } else character(0)
 }
 
 GraphSubset <- function(graph, nodes, type) {
