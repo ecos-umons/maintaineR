@@ -2,9 +2,8 @@ RenderFunctions <- function(functions) {
   refs <- tagList(lapply(functions, function(f) {
     name <- as.character(f$name)
     name <- if (is.na(name[1])) "Anonymous function" else name
-    file <- attr(f$ref, "srcfile")$filename
     text <- sprintf("%s in %s at lines %d to %d",
-                    name, file, f$ref[1], f$ref[3])
+                    name, f$file, f$begin, f$end)
     tagList(text, tags$br())
   }))
   tagList(p(refs), tags$pre(functions[[1]]$body))
@@ -20,8 +19,7 @@ RenderClones <- function(package, packages, code, clones, sort,
     if (nrow(clones)) {
       hashes <- unique(as.character(clones$hash))
       functions <- lapply(hashes, function(f) code[[f]])
-      res <- data.table(Function=lapply(lapply(hashes, function(f) code[[f]]),
-                                               RenderFunctions),
+      res <- data.table(Function=lapply(functions, RenderFunctions),
                         Size=sapply(functions, function(f) f[[1]]$size),
                         LOC=sapply(functions, function(f) {
                           length(strsplit(f[[1]]$body, "\n")[[1]])
