@@ -66,8 +66,8 @@ ClonesMetrics <- function(clones) {
                       "size"=sum(.SD$size)),
                by=list(package, version)]
   res <- clones[setkey(clones, hash),
-                allow.cartesian=TRUE][package != package.1]
-  m2 <- res[, list("n.pkgs"=length(unique(.SD$package.1))),
+                allow.cartesian=TRUE][package != i.package]
+  m2 <- res[, list("n.pkgs"=length(unique(.SD$i.package))),
             by=list(package, version)]
   merge(m1, m2, by=c("package", "version"))
 }
