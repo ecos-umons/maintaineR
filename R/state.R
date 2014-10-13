@@ -1,20 +1,4 @@
-Date <- function(packages, p, v, date) {
-  if (is.null(date)) {
-    as.Date(max({
-      if (is.null(p)) {
-        packages$mtime
-      } else if (is.null(v)) {
-        packages[package == p]$mtime
-      } else {
-        packages[package == p & version == v]$mtime
-      }
-    }))
-  } else {
-    as.Date(date)
-  }
-}
-
-Date <- function(packages, package, version, date) {
+Date <- function(packages, package=NULL, version=NULL, date=NULL) {
   if (is.null(date)) {
     if (!is.null(package)) {
       packages <- packages[package == package, ]

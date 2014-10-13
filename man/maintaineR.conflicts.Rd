@@ -1,12 +1,14 @@
 \name{Conflicts}
 \alias{Conflicts}
+\alias{ConflictsWith}
 \encoding{UTF-8}
 \title{Conflicts}
 \description{
-  Return the list of conflicts in a set of given packages.
+  Conflicts manipulation functions
 }
 
 \usage{
+ConflictsWith(packages, cran)
 Conflicts(packages, cran)
 }
 \arguments{
@@ -14,8 +16,12 @@ Conflicts(packages, cran)
   \item{cran}{CRAN data.}
 }
 \value{
-  Returns a data.frame containing the list of objects from packages
-  which names are in conflict with another object name in other CRAN
+  \code{Conflicts} returns a subset of \code{cran$conflicts} contaning
+  the objects from \code{packages} which names are duplicated in other
+  CRAN packages.
+
+  \code{ConflictsWith} returns a subset of \code{cran$conflicts}
+  contaning the conflicts wth \code{packages} contained in other CRAN
   packages.
 }
 

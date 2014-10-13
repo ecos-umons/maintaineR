@@ -8,11 +8,11 @@
 }
 
 \usage{
-PackageHistory(package, cran, range=c(as.Date("0-1-1"), Sys.Date()))
+PackageHistory(p, packages, range=c(as.Date("0-1-1"), Sys.Date()))
 }
 \arguments{
-  \item{package}{Package name.}
-  \item{cran}{CRAN data.}
+  \item{p}{Package name.}
+  \item{packages}{CRAN data.}
   \item{range}{A Date vector of length 2 containing date range to use
     for the history.}
 }
