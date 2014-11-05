@@ -75,8 +75,8 @@ output$data.table <- renderUI({
     res$Download <- lapply(sprintf("download %s %s", res$Package, res$Version),
                            checkboxInput, "")
   }
-  res$Package <- lapply(res$Package, function(p) {
-    tags$a(href=sprintf("?p=%s&d=%s", p, date()), p)
+  res$Package <- by(res, 1:nrow(res), function(p) {
+    tags$a(href=sprintf("?p=%s&v=%s", p$Package, p$Version), p$Package)
   })
   MakeTable(res)
 })
