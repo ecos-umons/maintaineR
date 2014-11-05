@@ -10,13 +10,14 @@
 
 \usage{
 State(packages, date)
-Date(packages, package=NULL, version=NULL, date=NULL)
+Date(packages, p=NULL, v=NULL, d=NULL)
 }
 \arguments{
   \item{packages}{Dataframe of all packages}
   \item{date}{Date to consider for CRAN snapshot}
-  \item{package}{Package}
-  \item{version}{Version}
+  \item{d}{Date to consider for CRAN snapshot}
+  \item{p}{Package}
+  \item{v}{Version}
 }
 \value{
   \code{State} returns a subset of \code{packages} with one row for each distinct
