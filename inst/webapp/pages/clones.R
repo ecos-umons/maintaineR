@@ -1,9 +1,12 @@
 RenderFunctions <- function(functions) {
   refs <- tagList(lapply(functions, function(f) {
-    name <- as.character(f$name)
-    name <- if (is.na(name[1])) "Anonymous function" else name
+    if (is.na(as.character(f$name)[1])) {
+      name <- "Anonymous function"
+    } else {
+      name <- as.character(as.expression(f$name))
+    }
     text <- sprintf("%s in %s at lines %d to %d",
-                    name, f$file, f$begin, f$end)
+                    name, f$file, f$begin[1], f$end[1])
     tagList(text, tags$br())
   }))
   tagList(p(refs), tags$pre(functions[[1]]$body))
