@@ -2,7 +2,7 @@ Date <- function(packages, p=NULL, v=NULL, d=NULL) {
   if (is.null(d)) {
     if (!is.null(p)) {
       packages <- packages[package == p]
-      if (!is.null(version)) packages <- packages[version == v]
+      if (!is.null(v)) packages <- packages[version == v]
     }
     as.Date(max(packages$mtime))
   } else as.Date(d)
