@@ -1,15 +1,15 @@
 RenderFunctions <- function(functions) {
-  refs <- tagList(lapply(functions, function(f) {
+  refs <- tagList(lapply(split(functions, 1:nrow(functions)), function(f) {
     if (is.na(as.character(f$name)[1])) {
       name <- "Anonymous function"
     } else {
       name <- as.character(as.expression(f$name))
     }
     text <- sprintf("%s in %s at lines %d to %d",
-                    name, f$file, f$begin[1], f$end[1])
+                    name, f$file, f$begin.line, f$end.line)
     tagList(text, tags$br())
   }))
-  tagList(p(refs), tags$pre(functions[[1]]$body))
+  tagList(p(refs), tags$pre(functions[1]$body))
 }
 
 RenderClones <- function(package, packages, code, clones, sort,
@@ -21,12 +21,10 @@ RenderClones <- function(package, packages, code, clones, sort,
            old=setkey(clones, mtime))
     if (nrow(clones)) {
       hashes <- unique(as.character(clones$hash))
-      functions <- lapply(hashes, function(f) code[[f]])
+      functions <- split(code, code$hash)[hashes]
       res <- data.table(Function=lapply(functions, RenderFunctions),
-                        Size=sapply(functions, function(f) f[[1]]$size),
-                        LOC=sapply(functions, function(f) {
-                          length(strsplit(f[[1]]$body, "\n")[[1]])
-                        }),
+                        Size=sapply(functions, function(f) f[1]$size),
+                        LOC=sapply(functions, function(f) f[1]$loc),
                         Packages=split(apply(clones, 1,
                           function(p) {
                             tagList(a(href=PackageLink(p), PackageFullName(p)), br())
